@@ -18,7 +18,7 @@ then
 echo "directory exists"
 else
 echo "creating directory first"
-mkdir $directory
+mkdir -p $directory
 	if [ -d "${directory}" ]
 	then
 	echo "created directory"
