@@ -4,11 +4,22 @@ else
 append=gcc
 
 endif
-all: 
-	$(append) -g -Wall -c -o writer.o writer.c
-	$(append) -g -Wall -I/ writer.o -o writer
+
+compiler_output=writer.o
+linker_output=writer
+source=writer.c
+
+all:
+	$(append) -g -Wall -c -o ${compiler_output} ${source}
+	$(append) -g -Wall -I/ ${compiler_output} -o ${linker_output}
 	
 		
 
 clean:
 	rm -f writer *.o *.elf *.map
+
+
+
+
+
+

@@ -16,8 +16,13 @@ bool do_system(const char *cmd)
  *   and return a boolean true if the system() call completed with success
  *   or false() if it returned a failure
 */
+     int sys_rtn = system(cmd);
 
-    return true;
+	if(sys_rtn==0){
+	return true;
+	}else {
+	return false;
+	}
 }
 
 /**
@@ -59,6 +64,39 @@ bool do_exec(int count, ...)
  *
 */
 
+
+int childpid =fork();
+
+if(childpid ==-1) {
+
+perror("failed to fork child process");
+return false;
+
+}else if (childpid>0){
+int status;
+printf("This is the parent process with a child processID of: %d\n" , childpid);
+int waitpid_rtn = waitpid(childpid , &status , 0);
+if(waitpid_rtn==-1){
+printf("waiting error");
+ perror("wait Failed");
+ return false;
+
+}
+if(WEXITSTATUS(status)!=0){
+printf("The child has returned error code: %d\n" , WEXITSTATUS(status));
+return false;
+
+}
+}else if (childpid ==0){
+printf("This is the child process : %d\n" , childpid);
+int execv_rtn = execv(command[0],command);
+if(execv_rtn==-1){
+perror("execv Failed");
+exit(1);
+}
+
+}
+
     va_end(args);
 
     return true;
@@ -93,7 +131,73 @@ bool do_exec_redirect(const char *outputfile, int count, ...)
  *
 */
 
+
+
+int childpid = fork();
+
+
+if(childpid ==0){
+
+int fd = open(outputfile , O_CREAT | O_RDWR , 00777);
+
+if ( fd == -1 ) {
+printf("error %s",strerror(errno));
+fprintf(stderr , "Error: %d - %s" , errno , strerror(errno));
+ return false;
+} 
+
+
+if (dup2(fd , STDOUT_FILENO) == -1) {
+perror("Error in duplicating standard output files\n");
+return false;
+}
+
+
+
+if (execv(command[0] , command) == -1) {
+perror("Error in execv\n");
+exit(1);
+}
+close(fd);
+
+
+}else if (childpid>0){
+int status;
+printf("This is the parent process with a child processID of: %d\n" , childpid);
+int waitpid_rtn = waitpid(childpid , &status , 0);
+if(waitpid_rtn==-1){
+printf("waiting error");
+ perror("wait Failed");
+ return false;
+
+}
+if(WEXITSTATUS(status)!=0){
+printf("The child has returned error code: %d\n" , WEXITSTATUS(status));
+return false;
+}
+
+}else {
+
+perror("failed to fork child process");
+return false;
+
+}
+
+
+
+
     va_end(args);
 
     return true;
 }
+
+
+
+
+
+
+
+
+
+
+
