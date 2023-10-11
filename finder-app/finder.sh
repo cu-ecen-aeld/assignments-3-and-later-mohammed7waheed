@@ -22,4 +22,4 @@ fi
 
 cd $filesdir
 
-echo "The number of files are `ls | wc -l` and the number of matching lines are `grep -r "${searchstr}" | wc -l`"
+echo "The number of files are `ls | wc -l` and the number of matching lines are `grep -r "${searchstr}" ${filesdir} | wc -l`"
