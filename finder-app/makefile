@@ -10,8 +10,8 @@ linker_output=writer
 source=writer.c
 
 all:
-	$(cc) -g -c -o ${compiler_output} ${source}
-	$(cc) -g -I/ ${compiler_output} -o ${linker_output}
+	${cc} -g -c -o ${compiler_output} ${source}
+	${cc} -g -I/ ${compiler_output} -o ${linker_output}
 	
 		
 
