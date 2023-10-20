@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <syslog.h>
 
-
+//change
 int main (int argc, char* argv[]){
 
 openlog(NULL,0,LOG_USER);
