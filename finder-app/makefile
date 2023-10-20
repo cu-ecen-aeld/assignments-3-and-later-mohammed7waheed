@@ -1,7 +1,7 @@
 ifdef CROSS_COMPILE
-append=$(CROSS_COMPILE)gcc
+cc=$(CROSS_COMPILE)gcc
 else
-append=gcc
+cc=gcc
 
 endif
 
@@ -10,8 +10,8 @@ linker_output=writer
 source=writer.c
 
 all:
-	$(append) -g -Wall -c -o ${compiler_output} ${source}
-	$(append) -g -Wall -I/ ${compiler_output} -o ${linker_output}
+	$(cc) -g -Wall -c -o ${compiler_output} ${source}
+	$(cc) -g -Wall -I/ ${compiler_output} -o ${linker_output}
 	
 		
 
