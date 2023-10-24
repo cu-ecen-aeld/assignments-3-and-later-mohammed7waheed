@@ -10,7 +10,7 @@ endif
 
 all:
 	${CC} -g -Wall -c -o writer.o writer.c
-	${cc} -g -Wall -I/ -o writer writer.o 
+	${cc} -g -Wall -o writer writer.o 
 
 
 clean:
