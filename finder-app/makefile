@@ -21,7 +21,7 @@ cc=gcc
 
 endif
 all: 
-	${cc} -o writer.o writer.c
+	${cc} -o writer writer.c
 	
 	
 		
