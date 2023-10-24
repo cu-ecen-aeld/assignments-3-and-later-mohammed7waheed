@@ -1,16 +1,31 @@
-CROSS_COMPILE=gcc
-ifeq ($(CROSS_COMPILE),aarch64-none-linux-gnu-)
-	CC=$(CROSS_COMPILE)gcc
+#CROSS_COMPILE=gcc
+#ifeq ($(CROSS_COMPILE),aarch64-none-linux-gnu-)
+#	CC=$(CROSS_COMPILE)gcc
+#else
+#	CC=gcc
+#endif
+#all:writer
+#writer:writer.c
+#	${CC} -o writer writer.c
+#clean:
+#	rm writer $(wildcard *.o)
+
+
+
+ifdef CROSS_COMPILE
+append=$(CROSS_COMPILE)gcc
 else
-	CC=gcc
+append=gcc
+
 endif
-all:writer
-writer:writer.c
-	${CC} -o writer writer.c
+all: 
+	$(append) -g -Wall -c -o writer.o writer.c
+	$(append) -g -Wall -I/ writer.o -o writer
+	
+		
+
 clean:
-	rm writer $(wildcard *.o)
-
-
+	rm -f writer *.o *.elf *.map
 
 
 
