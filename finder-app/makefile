@@ -9,7 +9,7 @@ endif
 
 
 all:
-	${CC} -o writer writer.c
+	${CC} -g -Wall -o writer writer.c
 
 
 
