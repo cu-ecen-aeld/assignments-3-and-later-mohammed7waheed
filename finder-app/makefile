@@ -9,8 +9,8 @@
 all:writer
 writer:writer.c
 	${CC} -o writer writer.c
-clean:
-	rm writer $(wildcard *.o)
+#clean:
+#	rm writer $(wildcard *.o)
 
 
 
