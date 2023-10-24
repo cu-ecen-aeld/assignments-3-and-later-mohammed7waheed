@@ -6,8 +6,7 @@
 #endif
 
 
-all:writer
-writer:writer.c
+all:
 	${CC} -o writer writer.c
 #clean:
 #	rm writer $(wildcard *.o)
