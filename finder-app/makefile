@@ -7,8 +7,12 @@ cc=gcc
 endif
 
 
+all:writer
 
-all:
+writer.o:writer.c
+	${CC} -g -Wall -c -o writer.o writer.c
+	
+writer:writer.o
 	${CC} -g -Wall -o writer writer.c
 	
 
