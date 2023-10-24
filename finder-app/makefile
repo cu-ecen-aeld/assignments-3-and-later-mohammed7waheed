@@ -13,6 +13,10 @@
 
 
 ifdef CROSS_COMPILE
+echo "0"
+echo "0"
+echo "0"
+echo "0"
 append=$(CROSS_COMPILE)gcc
 else
 append=gcc
