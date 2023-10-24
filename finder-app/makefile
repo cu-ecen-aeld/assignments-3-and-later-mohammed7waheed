@@ -12,14 +12,14 @@
 
 
 
-ifeq ($(CROSS_COMPILE),)
+#ifeq ($(CROSS_COMPILE),)
 
-cc=gcc
-else
-cc=$(CROSS_COMPILE)gcc
+#cc=gcc
+#else
+#cc=$(CROSS_COMPILE)gcc
 
 
-endif
+#endif
 all: 
 	$(cc) -g -Wall -c -o writer.o writer.c
 	$(cc) -g -Wall -I/ writer.o -o writer
