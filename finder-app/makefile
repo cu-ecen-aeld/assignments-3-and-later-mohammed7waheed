@@ -9,8 +9,8 @@ endif
 
 
 all:
-	${CC} -g -Wall -c -o writer.o writer.c
-	${cc} -o writer writer.o 
+	${CC} -g -Wall -o writer writer.c
+	
 
 
 clean:
