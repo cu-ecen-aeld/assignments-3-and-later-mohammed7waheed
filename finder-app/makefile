@@ -17,18 +17,15 @@ echo "0"
 echo "0"
 echo "0"
 echo "0"
-append=$(CROSS_COMPILE)gcc
+cc=$(CROSS_COMPILE)gcc
 else
-echo "0"
-echo "0"
-echo "0"
-echo "0"
-append=gcc
+
+cc=gcc
 
 endif
 all: 
-	$(append) -g -Wall -c -o writer.o writer.c
-	$(append) -g -Wall -I/ writer.o -o writer
+	$(cc) -g -Wall -c -o writer.o writer.c
+	$(cc) -g -Wall -I/ writer.o -o writer
 	
 		
 
