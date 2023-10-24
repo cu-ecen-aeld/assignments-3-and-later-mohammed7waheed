@@ -12,15 +12,12 @@
 
 
 
-ifdef CROSS_COMPILE
-echo "0"
-echo "0"
-echo "0"
-echo "0"
-cc=$(CROSS_COMPILE)gcc
-else
+ifeq ($(CROSS_COMPILE),)
 
 cc=gcc
+else
+cc=$(CROSS_COMPILE)gcc
+
 
 endif
 all: 
