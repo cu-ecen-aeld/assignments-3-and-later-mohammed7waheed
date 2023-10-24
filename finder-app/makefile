@@ -12,14 +12,14 @@
 
 
 
-#ifeq ($(CROSS_COMPILE),)
+ifeq ($(CROSS_COMPILE),aarch64-none-linux-gnu-)
+cc=$(CROSS_COMPILE)gcc
 
-#cc=gcc
-#else
-#cc=$(CROSS_COMPILE)gcc
+else
+cc=gcc
 
 
-#endif
+endif
 all: 
 	$(cc) -g -Wall -c -o writer.o writer.c
 	$(cc) -g -Wall -I/ writer.o -o writer
