@@ -21,8 +21,8 @@ cc=gcc
 
 endif
 all: 
-	$(cc) -g -Wall -c -o writer.o writer.c
-	$(cc) -g -Wall -I/ writer.o -o writer
+	$(cc) -o writer.o writer.c
+	
 	
 		
 
