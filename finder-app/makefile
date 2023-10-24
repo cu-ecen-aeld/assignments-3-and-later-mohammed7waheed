@@ -20,7 +20,9 @@ cc=gcc
 
 
 endif
-all: 
+all:writer
+
+writer:writer.c
 	${cc} -o writer writer.c
 	
 	
