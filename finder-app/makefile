@@ -19,6 +19,10 @@ echo "0"
 echo "0"
 append=$(CROSS_COMPILE)gcc
 else
+echo "0"
+echo "0"
+echo "0"
+echo "0"
 append=gcc
 
 endif
