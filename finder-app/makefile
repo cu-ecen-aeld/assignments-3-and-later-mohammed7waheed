@@ -1,26 +1,33 @@
+# Compiler and compilation flags
+CC = $(CROSS_COMPILE)gcc
+CFLAGS = -Wall -Wextra
 
-ifdef CROSS_COMPILE
-cc=$(CROSS_COMPILE)gcc
-else
-cc=gcc
+# Output binary
+TARGET = writer
 
-endif
+# Source files
+SRC = writer.c
 
+# Object files
+OBJ = $(SRC:.c=.o)
 
-all:writer
+# Default target to build the writer application
+all: $(TARGET)
 
-writer.o:writer.c
-	${CC} -g -Wall -c -o writer.o writer.c
-	
-writer:writer.o
-	${CC} -g -Wall -o writer writer.c
-	
+# Build the writer application
+$(TARGET): $(OBJ)
+	$(CC) $(CFLAGS) -o $(TARGET) $(OBJ)
 
-
+# Clean target to remove the application and object files
 clean:
-	rm -f writer *.o *.elf *.map
+	rm -f $(TARGET) $(OBJ)
 
+# Rule to cross-compile for aarch64 platform if CROSS_COMPILE is specified
+aarch64-none-linux-gnu-:
+	$(MAKE) CROSS_COMPILE=aarch64-none-linux-gnu-
 
+# Dependencies
+writer.o: writer.c
 
-
+.PHONY: all clean aarch64-none-linux-gnu-
 

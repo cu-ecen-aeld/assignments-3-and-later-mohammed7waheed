@@ -20,3 +20,4 @@ clean:
 
 install:
 	$(INSTALL) -D -m 755 $(TARGET) $(DESTDIR)/usr/bin/$(TARGET)
+
