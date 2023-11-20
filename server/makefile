@@ -1,25 +1,22 @@
+CC ?= $(CROSS_COMPILE)gcc
+$(info $(CC))
+CFLAGS ?= -g -Wall -Werror
+CROSS_COMPILE ?=
+TARGET ?= aesdsocket
+LDFLAGS ?= -lpthread -lrt
 
+default: $(TARGET)
 
+all: default
 
-ifeq ($(CROSS_COMPILE),aarch64-none-linux-gnu-)
-	CC = $(CROSS_COMPILE)gcc
-else
-	CC =gcc
-endif
+aesdsocket: aesdsocket.o
+	$(CC) $(CFLAGS) -o $(TARGET) aesdsocket.o $(LDFLAGS)
 
-CFLAGS = -Wall -g
-
-DEPS =
-
-OBJ = aesdsocket.o
-
-all: aesdsocket
-
-writer: $(OBJ)
-	$(CC) $(CFLAGS) -o aesdsocket $(OBJ)
-
-%.o: %.c $(DEPS)
-	$(CC) $(CFLAGS) -c -o $@ $<
+aesdsocket.o: aesdsocket.c
+	$(CC) $(CFLAGS) -c aesdsocket.c -o aesdsocket.o
 
 clean:
-	rm -f aesdsocket *.o
+	rm -f $(TARGET) aesdsocket.o
+
+install:
+	$(INSTALL) -D -m 755 $(TARGET) $(DESTDIR)/usr/bin/$(TARGET)
