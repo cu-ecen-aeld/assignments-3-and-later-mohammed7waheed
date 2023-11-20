@@ -1,23 +1,59 @@
-CC ?= $(CROSS_COMPILE)gcc
-$(info $(CC))
-CFLAGS ?= -g -Wall -Werror
-CROSS_COMPILE ?=
+# Default compiler
+CC ?= gcc
+# Compiler flags
+CFLAGS ?= -Wall -Werror -Wextra -O2
+# Source directory
+SRC_DIR ?= src
+# Object directory
+OBJ_DIR ?= obj
+# Output directory for the application
+BIN_DIR ?= bin
+
+LDFLAGS ?= -Wl,--hash-style=gnu
+
 TARGET ?= aesdsocket
-LDFLAGS ?= -lpthread -lrt
 
-default: $(TARGET)
+# Application name
+APP_NAME ?= TARGET
 
-all: default
+# Source and object files
+SRCS ?= aesdsocket.c
+OBJS ?= $(SRCS:%.c=$(OBJ_DIR)/%.o)
 
-aesdsocket: aesdsocket.o
-	$(CC) $(CFLAGS) -o $(TARGET) aesdsocket.o $(LDFLAGS)
+# If the CROSS_COMPILE variable is set, prepend it to the CC variable
+ifdef CROSS_COMPILE
+    CC ?= $(CROSS_COMPILE)$(CC)
+endif
 
-aesdsocket.o: aesdsocket.c
-	$(CC) $(CFLAGS) -c aesdsocket.c -o aesdsocket.o
+# Define default target
+.PHONY: default
+default: all
 
+# Define all target
+.PHONY: all
+all: $(APP_NAME)
+
+# Link the application
+$(APP_NAME): $(OBJS)
+	$(CC) $(OBJS) -o $(TARGET) $(LDFLAGS) -lpthread -lrt # $@ # -pthread
+
+# Compile source files to object files
+$(OBJ_DIR)/%.o: %.c
+	@mkdir -p $(OBJ_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@ # -c $< -o $@ $(INCLUDES) $(LDFLAGS) #$^ -o $@ $(INCLUDES) $(LDFLAGS) #-c $< -o $@
+
+# Clean target to remove the application and object files
+.PHONY: clean
 clean:
-	rm -f $(TARGET) aesdsocket.o
+	rm -rf wr $(APP_NAME) iter $(OBJ_DIR)/*
+	# rm valgrind-out.txt
 
-install:
-	$(INSTALL) -D -m 755 $(TARGET) $(DESTDIR)/usr/bin/$(TARGET)
+# Include dependencies
+-include $(OBJS:.o=.d)
+
+# Rule to generate a dependency file by using the C preprocessor
+# (see man gcc for details on the -MM and -MT options).
+$(OBJ_DIR)/%.d: %.c
+	@mkdir -p $(OBJ_DIR)
+	$(CC) $(CFLAGS) -MM -MT '$(OBJ_DIR)/$*.o $@' $< > $@
 
